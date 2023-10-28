@@ -14,6 +14,7 @@ import SimmerUI from "./SimmerUI";
 const NameComponent = () => {
   const [name, setName] = useState("");
   const [memoizedData, setMemoizedData] = useState(null);
+  const [networkIssue, setNetworkIssue] = useState(false);
 
   const fetchData = async (name) => {
     try {
@@ -35,9 +36,14 @@ const NameComponent = () => {
         nationality: nationalityData?.country[0]?.country_id,
       };
       setMemoizedData(data);
+      setNetworkIssue(false);
+      if (ageData.age) {
+        setName("");
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
       setMemoizedData(null);
+      setNetworkIssue(true);
     }
   };
 
@@ -74,6 +80,8 @@ const NameComponent = () => {
               <Loading>
                 {memoizedData?.name && memoizedData?.age === null
                   ? "Invalid input"
+                  : networkIssue
+                  ? "Network issue"
                   : "Loading..."}
               </Loading>
             </>
