@@ -25,7 +25,7 @@ export const SubmitButton = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   font-size: 16px;
 `;
 

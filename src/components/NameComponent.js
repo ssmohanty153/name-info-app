@@ -30,18 +30,21 @@ const NameComponent = () => {
 
       const data = {
         name,
-        age: ageData.age,
-        gender: genderData.gender,
-        nationality: nationalityData.country[0].country_id,
+        age: ageData?.age,
+        gender: genderData?.gender,
+        nationality: nationalityData?.country[0]?.country_id,
       };
       setMemoizedData(data);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setMemoizedData(null);
     }
   };
 
   const handleButtonClick = () => {
-    fetchData(name);
+    if (name) {
+      fetchData(name);
+    }
   };
 
   return (
@@ -55,16 +58,25 @@ const NameComponent = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <SubmitButton onClick={handleButtonClick}>Submit</SubmitButton>
-          {memoizedData ? (
+          <SubmitButton disabled={name === ""} onClick={handleButtonClick}>
+            Submit
+          </SubmitButton>
+
+          {memoizedData?.age ? (
             <ResultContainer>
-              <ResultItem>Name: {memoizedData.name}</ResultItem>
-              <ResultItem>Age: {memoizedData.age}</ResultItem>
-              <ResultItem>Gender: {memoizedData.gender}</ResultItem>
-              <ResultItem>Nationality: {memoizedData.nationality}</ResultItem>
+              <ResultItem>Name: {memoizedData?.name}</ResultItem>
+              <ResultItem>Age: {memoizedData?.age}</ResultItem>
+              <ResultItem>Gender: {memoizedData?.gender}</ResultItem>
+              <ResultItem>Nationality: {memoizedData?.nationality}</ResultItem>
             </ResultContainer>
           ) : (
-            <Loading>loading...</Loading>
+            <>
+              <Loading>
+                {memoizedData?.name && memoizedData?.age === null
+                  ? "Invalid input"
+                  : "Loading..."}
+              </Loading>
+            </>
           )}
         </FormContainer>
       </Formcontainermain>
