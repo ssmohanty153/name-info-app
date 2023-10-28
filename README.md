@@ -15,3 +15,5 @@ The **Age, Gender, and Nationality Identifier App** is a simple web application 
 2. Install the required dependencies using `npm install`.
 3. Start the application with `npm run dev`.
 4. Access the
+
+![alt text](./public/demo.png)
